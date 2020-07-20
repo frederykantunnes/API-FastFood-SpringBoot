@@ -16,6 +16,7 @@ public class Restaurant {
     private byte[] picture;
     private String phone;
     private String details;
+    private String name;
     private String opening_hours;
     private boolean visible;
     private boolean is_open;
@@ -119,5 +120,13 @@ public class Restaurant {
 
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
