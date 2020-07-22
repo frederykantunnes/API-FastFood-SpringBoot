@@ -10,11 +10,13 @@ public class FoodServiceDetailsDTO {
 
     private Long id;
     private String name;
+    private String image;
     private Page<Restaurant> restaurants;
 
     public FoodServiceDetailsDTO(FoodService foodService, Page<Restaurant> restaurants) {
         this.id = foodService.getId();
         this.name = foodService.getName();
+        this.image = foodService.getPicture();
         this.restaurants = restaurants;
     }
 
@@ -24,6 +26,10 @@ public class FoodServiceDetailsDTO {
 
     public String getName() {
         return name;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public Page<Restaurant> getRestaurants() {

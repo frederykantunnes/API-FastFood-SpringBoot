@@ -36,6 +36,14 @@ public class FoodServiceService {
         return null;
     }
 
+    public FoodService create(FoodService foodService) {
+        return foodServiceRepository.save(foodService);
+    }
+
+    public void delete(long id) {
+        foodServiceRepository.deleteById(id);
+    }
+
 //    public FoodService create(FoodServiceForm foodService) {
 //        FoodService service = foodService.to_convert();
 //        foodServiceRepository.save(service);

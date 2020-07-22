@@ -7,7 +7,7 @@ public class FoodServiceDTO {
 
     private Long id;
     private String name;
-    private byte[] picture;
+    private String picture;
 
     public FoodServiceDTO(FoodService foodService) {
         this.id = foodService.getId();
@@ -19,7 +19,12 @@ public class FoodServiceDTO {
         return name;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
+
+    public Long getId() {
+        return id;
+    }
+
 }
