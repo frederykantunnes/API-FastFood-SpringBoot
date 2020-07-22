@@ -11,8 +11,7 @@ public class FoodCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Lob
-    private byte[] picture;
+    private String picture;
     @ManyToOne
     private Restaurant restaurant;
     private LocalDateTime created_at = LocalDateTime.now();
@@ -49,11 +48,11 @@ public class FoodCategory {
         this.name = name;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 

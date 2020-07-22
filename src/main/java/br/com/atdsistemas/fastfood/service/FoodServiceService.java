@@ -44,6 +44,11 @@ public class FoodServiceService {
         foodServiceRepository.deleteById(id);
     }
 
+    public FoodService findById(Long id){
+        Optional<FoodService> foodService = foodServiceRepository.findById(id);
+        return foodService.orElse(null);
+    }
+
 //    public FoodService create(FoodServiceForm foodService) {
 //        FoodService service = foodService.to_convert();
 //        foodServiceRepository.save(service);

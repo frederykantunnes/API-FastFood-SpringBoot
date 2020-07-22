@@ -62,7 +62,7 @@ public class FoodServiceResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id){
         foodServiceService.delete(id);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build();
     }
 
 

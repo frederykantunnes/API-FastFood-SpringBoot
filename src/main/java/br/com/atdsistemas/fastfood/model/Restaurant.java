@@ -13,7 +13,7 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
-    private byte[] picture;
+    private String picture;
     private String phone;
     private String details;
     private String name;
@@ -50,11 +50,11 @@ public class Restaurant {
         this.id = id;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
