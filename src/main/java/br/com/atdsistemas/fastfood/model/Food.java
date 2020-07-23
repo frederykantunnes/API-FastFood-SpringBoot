@@ -13,16 +13,13 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Lob
-    private byte[] picture;
+    private String picture;
     private String details;
     private Double price;
     private String preparation_time;
     private boolean is_featured;
     private boolean is_combo;
     private boolean available;
-    @ManyToOne
-    private User user;
     @ManyToOne
     private FoodCategory foodCategory;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -61,11 +58,11 @@ public class Food {
         this.name = name;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -115,14 +112,6 @@ public class Food {
 
     public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public FoodCategory getFoodCategory() {

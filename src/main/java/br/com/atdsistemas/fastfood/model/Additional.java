@@ -1,9 +1,6 @@
 package br.com.atdsistemas.fastfood.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -18,6 +15,9 @@ public class Additional {
     private Double price;
     private boolean available;
     private LocalDateTime created_at = LocalDateTime.now();
+
+    @OneToOne
+    private Restaurant restaurant;
 
     public Additional() {
     }
