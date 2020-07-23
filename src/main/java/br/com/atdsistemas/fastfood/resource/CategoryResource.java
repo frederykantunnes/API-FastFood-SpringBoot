@@ -1,5 +1,6 @@
 package br.com.atdsistemas.fastfood.resource;
 
+import br.com.atdsistemas.fastfood.model.Food;
 import br.com.atdsistemas.fastfood.model.FoodCategory;
 import br.com.atdsistemas.fastfood.model.FoodService;
 import br.com.atdsistemas.fastfood.model.dto.category.CategoryDetailsDTO;
@@ -27,6 +28,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping("categories")
@@ -39,6 +41,7 @@ public class CategoryResource {
     public ResponseEntity<CategoryDetailsDTO> findById(@PathVariable long id, @PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable pageable){
         return ResponseEntity.ok().body(foodCategoryService.findById(id, pageable));
     }
+
 
     @PostMapping
     @Transactional
@@ -54,7 +57,7 @@ public class CategoryResource {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<FoodCategoryDTO> updateOpenClosed(@RequestBody CategoryFormUpdate formUpdate, @PathVariable long id){
+    public ResponseEntity<FoodCategoryDTO> update(@RequestBody CategoryFormUpdate formUpdate, @PathVariable long id){
         FoodCategoryDTO restaurant = foodCategoryService.update(formUpdate.getName(), id);
         return ResponseEntity.ok().body(restaurant);
     }
@@ -69,6 +72,12 @@ public class CategoryResource {
             return ResponseEntity.ok().body(restaurant);
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id){
+        foodCategoryService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

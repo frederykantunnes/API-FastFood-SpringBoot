@@ -70,4 +70,9 @@ public class FoodCategoryService {
         }
         return null;
     }
+
+    public void delete(long id) {
+        foodCategoryRepository.deleteById(id);
+    }
+
 }

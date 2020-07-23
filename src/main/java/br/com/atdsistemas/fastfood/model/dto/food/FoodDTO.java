@@ -25,7 +25,9 @@ public class FoodDTO {
         this.available = food.isAvailable();
         this.preparation_time = food.getPreparation_time();
         this.price = food.getPrice();
-        this.additionalList = food.getAdditionals().stream().map(AdditionalDTO::new).collect(Collectors.toList());
+        if (food.getAdditionals() != null){
+            this.additionalList = food.getAdditionals().stream().map(AdditionalDTO::new).collect(Collectors.toList());
+        }
         details = food.getDetails();
     }
 
