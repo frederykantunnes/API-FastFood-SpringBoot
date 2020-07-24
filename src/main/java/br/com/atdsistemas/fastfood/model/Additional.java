@@ -74,4 +74,12 @@ public class Additional {
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 }

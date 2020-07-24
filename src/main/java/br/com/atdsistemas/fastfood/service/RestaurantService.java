@@ -4,10 +4,12 @@ import br.com.atdsistemas.fastfood.model.Address;
 import br.com.atdsistemas.fastfood.model.Food;
 import br.com.atdsistemas.fastfood.model.FoodCategory;
 import br.com.atdsistemas.fastfood.model.Restaurant;
+import br.com.atdsistemas.fastfood.model.dto.additional.AdditionalDTO;
 import br.com.atdsistemas.fastfood.model.dto.food_category.FoodCategoryDTO;
 import br.com.atdsistemas.fastfood.model.dto.restaurant.RestaurantDTO;
 import br.com.atdsistemas.fastfood.model.dto.restaurant.RestaurantDetailsDTO;
 import br.com.atdsistemas.fastfood.model.form.restaurant.RestaurantFormEdit;
+import br.com.atdsistemas.fastfood.repository.AdditionalRepository;
 import br.com.atdsistemas.fastfood.repository.AddressRepository;
 import br.com.atdsistemas.fastfood.repository.FoodCategoryRepository;
 import br.com.atdsistemas.fastfood.repository.RestaurantRepository;
@@ -33,6 +35,9 @@ public class RestaurantService {
     @Autowired
     AddressRepository addressRepository;
 
+    @Autowired
+    AdditionalRepository additionalRepository;
+
     public Page<RestaurantDTO> findAll(Pageable pageable){
         return restaurantRepository.findAll(pageable).map(RestaurantDTO::new);
     }
@@ -40,7 +45,8 @@ public class RestaurantService {
     public RestaurantDetailsDTO findById(long id) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
         if (restaurant.isPresent()){
-            RestaurantDetailsDTO restaurantDetailsDTO = new RestaurantDetailsDTO(restaurant.get(), getCategories(id));
+            List<AdditionalDTO> additionals = additionalRepository.findAllByRestaurant_Id(restaurant.get().getId()).stream().map(AdditionalDTO::new).collect(Collectors.toList());
+            RestaurantDetailsDTO restaurantDetailsDTO = new RestaurantDetailsDTO(restaurant.get(), getCategories(id), additionals);
             return restaurantDetailsDTO;
         }
         return null;
@@ -50,7 +56,8 @@ public class RestaurantService {
         Address address = addressRepository.save(restaurant.getAddress());
         restaurant.setAddress(address);
         Restaurant save = restaurantRepository.save(restaurant);
-        RestaurantDetailsDTO restaurantDetailsDTO = new RestaurantDetailsDTO(save, getCategories(save.getId()));
+        List<AdditionalDTO> additionals = additionalRepository.findAllByRestaurant_Id(restaurant.getId()).stream().map(AdditionalDTO::new).collect(Collectors.toList());
+        RestaurantDetailsDTO restaurantDetailsDTO = new RestaurantDetailsDTO(save, getCategories(save.getId()), additionals);
         return restaurantDetailsDTO;
     }
 
@@ -72,7 +79,8 @@ public class RestaurantService {
             updateRest.setPhone(restaurantFormEdit.getPhone());
             updateRest.setDetails(restaurantFormEdit.getDetails());
             updateRest.setOpening_hours(restaurantFormEdit.getOpening_hours());
-            return new RestaurantDetailsDTO(updateRest, getCategories(updateRest.getId()));
+            List<AdditionalDTO> additionals = additionalRepository.findAllByRestaurant_Id(updateRest.getId()).stream().map(AdditionalDTO::new).collect(Collectors.toList());
+            return new RestaurantDetailsDTO(updateRest, getCategories(updateRest.getId()), additionals);
         }
         return null;
     }
@@ -88,7 +96,8 @@ public class RestaurantService {
         if (restaurant.isPresent()){
             Restaurant rest = restaurant.get();
             rest.setPicture(upload);
-            return new RestaurantDetailsDTO(rest, getCategories(rest.getId()));
+            List<AdditionalDTO> additionals = additionalRepository.findAllByRestaurant_Id(rest.getId()).stream().map(AdditionalDTO::new).collect(Collectors.toList());
+            return new RestaurantDetailsDTO(rest, getCategories(rest.getId()), additionals);
         }
         return null;
     }
@@ -98,7 +107,8 @@ public class RestaurantService {
         if (restaurant.isPresent()){
             Restaurant rest = restaurant.get();
             rest.setIs_open(is_open);
-            return new RestaurantDetailsDTO(rest, getCategories(rest.getId()));
+            List<AdditionalDTO> additionals = additionalRepository.findAllByRestaurant_Id(rest.getId()).stream().map(AdditionalDTO::new).collect(Collectors.toList());
+            return new RestaurantDetailsDTO(rest, getCategories(rest.getId()), additionals);
         }
         return null;
     }

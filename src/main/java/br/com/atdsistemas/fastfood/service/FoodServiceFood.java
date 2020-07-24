@@ -1,11 +1,13 @@
 package br.com.atdsistemas.fastfood.service;
 
+import br.com.atdsistemas.fastfood.model.Additional;
 import br.com.atdsistemas.fastfood.model.Food;
 import br.com.atdsistemas.fastfood.model.FoodCategory;
 import br.com.atdsistemas.fastfood.model.Restaurant;
 import br.com.atdsistemas.fastfood.model.dto.food.FoodDTO;
 import br.com.atdsistemas.fastfood.model.dto.restaurant.RestaurantDetailsDTO;
 import br.com.atdsistemas.fastfood.model.form.food.FoodFormUpdate;
+import br.com.atdsistemas.fastfood.repository.AdditionalRepository;
 import br.com.atdsistemas.fastfood.repository.FoodCategoryRepository;
 import br.com.atdsistemas.fastfood.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class FoodServiceFood {
 
     @Autowired
     FoodRepository foodRepository;
+
+    @Autowired
+    AdditionalRepository additionalRepository;
 
     public FoodDTO create(Food food, long category) {
         Optional<FoodCategory> byId = foodCategoryRepository.findById(category);
@@ -61,5 +66,33 @@ public class FoodServiceFood {
 
     public void delete(long id) {
         foodRepository.deleteById(id);
+    }
+
+    public FoodDTO addAditionals(long id, long additional) {
+        Optional<Additional> additionalOptional = additionalRepository.findById(additional);
+        if (additionalOptional.isPresent()){
+            Optional<Food> food = foodRepository.findById(id);
+            if (food.isPresent()){
+                Food foodPresent = food.get();
+                List<Additional> additionals = foodPresent.getAdditionals();
+                additionals.add(additionalOptional.get());
+                foodPresent.setAdditionals(additionals);
+                return new FoodDTO(foodPresent);
+            }
+        }
+        return null;
+    }
+
+    public void deleteAdditional(long id, long additional) {
+        Optional<Additional> additionalOptional = additionalRepository.findById(additional);
+        if (additionalOptional.isPresent()){
+            Optional<Food> food = foodRepository.findById(id);
+            if (food.isPresent()){
+                Food foodPresent = food.get();
+                List<Additional> additionals = foodPresent.getAdditionals();
+                additionals.remove(additionalOptional.get());
+                foodPresent.setAdditionals(additionals);
+            }
+        }
     }
 }

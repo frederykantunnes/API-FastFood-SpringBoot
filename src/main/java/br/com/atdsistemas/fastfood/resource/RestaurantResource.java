@@ -6,8 +6,10 @@ import br.com.atdsistemas.fastfood.model.dto.food_service.FoodServiceDTO;
 import br.com.atdsistemas.fastfood.model.dto.restaurant.RestaurantDTO;
 import br.com.atdsistemas.fastfood.model.dto.restaurant.RestaurantDetailsDTO;
 import br.com.atdsistemas.fastfood.model.form.FoodServiceForm;
+import br.com.atdsistemas.fastfood.model.form.additional.AdditionalForm;
 import br.com.atdsistemas.fastfood.model.form.restaurant.RestaurantFormCreate;
 import br.com.atdsistemas.fastfood.model.form.restaurant.RestaurantFormEdit;
+import br.com.atdsistemas.fastfood.service.AdditionalService;
 import br.com.atdsistemas.fastfood.service.RestaurantService;
 import br.com.atdsistemas.fastfood.util.Directories;
 import br.com.atdsistemas.fastfood.util.FilesUpload;
@@ -34,6 +36,9 @@ public class RestaurantResource {
 
     @Autowired
     RestaurantService restaurantService;
+
+    @Autowired
+    AdditionalService additionalService;
 
     @GetMapping
     public ResponseEntity<Page<RestaurantDTO>> findAll(@PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable pageable){
@@ -89,4 +94,17 @@ public class RestaurantResource {
     }
 
 
+    @PostMapping("/{id}/additionals")
+    @Transactional
+    public ResponseEntity<RestaurantDetailsDTO> createAdditional(@RequestBody AdditionalForm additionalForm, @PathVariable long id){
+        RestaurantDetailsDTO additional = additionalService.createAdditional(additionalForm.getAdditional(), id);
+        return ResponseEntity.ok().body(additional);
+    }
+
+    @DeleteMapping("/additionals/{id}")
+    @Transactional
+    public ResponseEntity<Void> deleteAdditional(@PathVariable long id){
+        additionalService.deleteAdditional(id);
+        return ResponseEntity.noContent().build();
+    }
 }

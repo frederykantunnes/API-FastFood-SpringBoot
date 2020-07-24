@@ -1,7 +1,9 @@
 package br.com.atdsistemas.fastfood.model.dto.restaurant;
 
+import br.com.atdsistemas.fastfood.model.Additional;
 import br.com.atdsistemas.fastfood.model.Address;
 import br.com.atdsistemas.fastfood.model.Restaurant;
+import br.com.atdsistemas.fastfood.model.dto.additional.AdditionalDTO;
 import br.com.atdsistemas.fastfood.model.dto.food_category.FoodCategoryDTO;
 
 import java.util.List;
@@ -18,9 +20,9 @@ public class RestaurantDetailsDTO {
     private String address;
     private String reference_point;
     private List<FoodCategoryDTO> categories;
+    private List<AdditionalDTO> additionals;
 
-
-    public RestaurantDetailsDTO(Restaurant restaurant, List<FoodCategoryDTO> categories){
+    public RestaurantDetailsDTO(Restaurant restaurant, List<FoodCategoryDTO> categories, List<AdditionalDTO> additionals){
         this.id = restaurant.getId();
         this.name = restaurant.getName();
         this.picture = restaurant.getPicture();
@@ -34,6 +36,7 @@ public class RestaurantDetailsDTO {
             this.reference_point = address.getReference_point();
         }
         this.categories = categories;
+        this.additionals = additionals;
     }
 
     public Long getId() {
@@ -74,5 +77,9 @@ public class RestaurantDetailsDTO {
 
     public List<FoodCategoryDTO> getCategories() {
         return categories;
+    }
+
+    public List<AdditionalDTO> getAdditionals() {
+        return additionals;
     }
 }
