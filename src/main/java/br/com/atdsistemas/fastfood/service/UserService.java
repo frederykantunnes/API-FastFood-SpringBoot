@@ -1,14 +1,12 @@
 package br.com.atdsistemas.fastfood.service;
 
+
 import br.com.atdsistemas.fastfood.model.Restaurant;
 import br.com.atdsistemas.fastfood.model.User;
-import br.com.atdsistemas.fastfood.model.UserType;
 import br.com.atdsistemas.fastfood.repository.RestaurantRepository;
 import br.com.atdsistemas.fastfood.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-import sun.security.provider.MD5;
 
 import java.util.Optional;
 
